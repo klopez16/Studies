@@ -1,8 +1,6 @@
 #Juego de la serpiente
 
 import turtle                                       #Usamos la libreria turtle para construir la interfaz gráfica
-import time                                         #Usamos la libreria time para obtener el tiempo
-import random                                       #Usamos la libreria random para usar numeros aleatorios
 
 # Configuración de la ventana
 window = turtle.Screen()
