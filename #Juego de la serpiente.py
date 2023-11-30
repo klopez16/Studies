@@ -36,9 +36,27 @@ food.penup()                                        #Funcion para borrar el rast
 food.goto(0,0)                                      #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla
 
 #Configuracion del texto del puntaje
-point = turtle.Turtle()                             #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el texto del puntaje)
-point.speed(6)                                      #Establecer la velocidad de la animacion en turtle
-point.shape('triangle')                             #Establecer una forma geometrica para el alimento de la serpiente
-point.color('green')                                #Establecer un color para el alimento de la serpiente
-point.penup()                                       #Funcion para borrar el rastro de el alimento en la pantalla
-point.goto(0,0)                                     #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla
+point = turtle.Turtle()                                                     #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el texto del puntaje)
+point.speed(6)                                                              #Establecer la velocidad de la animacion en turtle
+point.color('white')                                                        #Establecer un color para el alimento de la serpiente
+point.penup()                                                               #Funcion para borrar el rastro de el alimento en la pantalla
+point.hideturtle()                                                          #Funcion para ocultar el objeto cuando se dibuja otros
+point.goto(0,800)                                                           #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla                                     
+point.write('Puntaje:0', align='center', font=('Roboto', 20, 'normal'))     #Funcion para visualizar el texto en la pantalla
+
+#Configuracion del cuerpo de la serpiente
+body = []
+color = [('green')]
+
+#Configuracion de movimientos
+def arriba ():
+    head.direction = 'up'
+
+def abajo ():
+    head.direction = 'down'
+
+def izquierda ():
+    head.direction = 'left'
+
+def derecha ():
+    head.direction = 'right'
