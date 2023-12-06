@@ -6,7 +6,7 @@ import time                                         #Libreria para acceder a fun
 
 
 #Configuracion pantalla
-hold = 0.1                                          #Asignar una variable para mantenter la pantalla visible 
+hold = 0.1                                          #Variable asignada para determinar un tiempo, en este caso un retraso 
 
 
 # Configuración de la pantalla
@@ -22,7 +22,7 @@ window.tracer(0)                                    #Establecer un mejor visual 
 #Configuración de variables de la pantalla
 window.title('Snake Game')                          #Título del juego que se visualiza en la pantalla  
 window.bgcolor('black')
-Puntaje = 0                                         #El mensaje del puntaje de la partida actuale iniciará en 0
+point = 0                                         #El mensaje del puntaje de la partida actuale iniciará en 0
 
 #Configuracion de la serpiente (cabeza)
 head = turtle.Turtle()                              #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso la cabeza)
@@ -48,11 +48,12 @@ point.color('white')                                                        #Est
 point.penup()                                                               #Funcion para borrar el rastro de el alimento en la pantalla
 point.hideturtle()                                                          #Funcion para ocultar el objeto cuando se dibuja otros
 point.goto(0,500)                                                           #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla                                     
-point.write('Puntaje:0', align='center', font=('Courier', 25, 'normal'))     #Funcion para visualizar el texto en la pantalla
+point.write('Puntaje:0', align='center', font=('Arial', 25, 'normal'))      #Funcion para visualizar el texto en la pantalla
 
 #Configuracion del cuerpo de la serpiente
 body = []
-color = [('green')]
+color = [(109,160,104),(104,142,160)]
+
 def crearbody():                                    #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
     body = turtle.Turtle()                          #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el cuerpo)
     turtle.colormode(1)                             #Funcion para determinar el rango numerico de los colores (RGB)
@@ -95,15 +96,6 @@ def direction():                                    #Funcion para reservar un bl
         x =  head.xcor()                            #Definimos a X como la variable que determina el movimiento horizontal de la serpiente 
         head.setx(x + 25)                           #Funcion para actualizar (mover) la posicion de cabeza de la serpiente en la coordenada X
 
-
-#Configuracion de Alimentacion
-def feeding():                                      #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
-    if head.distance(food)<25:                      #Funcion IF para determinar la distancia entre la cabeza y la comida
-        x = random.randint(-500, 500)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada X
-        y = random.randint(-500, 500)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada Y
-        food.goto(x,y)                              #Actualizacion del alimento de manera random
-        #newBody()                                   #Nueva variable para el cuerpo
-
 #Configuracion para movimiento del cuerpo
 def movementBody():                                 #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
     totalBody = len(body)                           #Funcion para devolver la longitud del objeto en este caso el cuerpo
@@ -113,9 +105,30 @@ def movementBody():                                 #Funcion para reservar un bl
         y = body[body-1].ycor()                     #Método para obtener la coordenada Y del objeto
         body[body].goto(x,y)                        #Método para mover el objeto a las coordenadas X,Y obtenidas en las dos líneas anteriores
 
+    if totalBody >0:
+        x = head.xcor()
+        y = head.ycor()
+        body[0].goto(x,y)
+
+#Configuracion de Alimentacion (choque de la cabeza con la comida)
+def feeding():                                      #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
+    if head.distance(food)<25:                      #Funcion IF para determinar la distancia entre la cabeza y la comida
+        x = random.randint(-500, 500)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada X
+        y = random.randint(-500, 500)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada Y
+        food.goto(x,y)                              #Actualizacion del alimento de manera random
+        newBody()                                   #Nueva variable para el cuerpo
+
+
+
+#Configuracion para conexion de la pantalla con el teclado
+window.listen()                                     #Funcion donde la pantalla está esperando la accion
+window.onkeypress(arriba,'Up')                      #Funcion que ejecuta la reserva del bloque definido, en este caso hacia arriba
+window.onkeypress(abajo,'Down')                     #Funcion que ejecuta la reserva del bloque definido, en este caso hacia abajo
+window.onkeypress(izquierda,'Left')                 #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la izquierda
+window.onkeypress(derecha,'Right')                  #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la derecha
 
 #Configuracion de la pantalla para que sea continua
 while True:                                         #Funcion para crear un bucle infinito en este caso utilizada para que la pantalla se mantenga activa
-    window.update()                                 #
-
-    time.sleep(hold)                                #
+    window.update()                                 #Funcion para que ejute constantemente la actualizacion de la pantalla, es decir que no la cierre
+    time.sleep(hold)                                #Funcion para que aplique el retraso del tiempo establecido inicialmente
+    
