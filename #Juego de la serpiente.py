@@ -12,17 +12,16 @@ hold = 0.1                                          #Variable asignada para dete
 # Configuración de la pantalla
 window = turtle.Screen()                            #Pantalla a generarse
 turtle.window_width()                               #Dimensiones de la pantalla (ancho)
-900                                                 
+200                                                 
 turtle.window_height()                              #Dimensiones de la pantalla (alto)
-900                                                 
+200                                                 
 turtle.delay()                                      #Establecer un retraso entre actualizaciones del lienzo
 500
 window.tracer(0)                                    #Establecer un mejor visual para la animacion
 
 #Configuración de variables de la pantalla
 window.title('Snake Game')                          #Título del juego que se visualiza en la pantalla  
-window.bgcolor('black')
-point = 0                                         #El mensaje del puntaje de la partida actuale iniciará en 0
+window.bgcolor('white')
 
 #Configuracion de la serpiente (cabeza)
 head = turtle.Turtle()                              #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso la cabeza)
@@ -44,11 +43,12 @@ food.goto(0,0)                                      #Funcion aplicada para que e
 #Configuracion del texto del puntaje
 point = turtle.Turtle()                                                     #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el texto del puntaje)
 point.speed(6)                                                              #Establecer la velocidad de la animacion en turtle
-point.color('white')                                                        #Establecer un color para el alimento de la serpiente
+point.color('black')                                                        #Establecer un color para el alimento de la serpiente
 point.penup()                                                               #Funcion para borrar el rastro de el alimento en la pantalla
 point.hideturtle()                                                          #Funcion para ocultar el objeto cuando se dibuja otros
 point.goto(0,500)                                                           #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla                                     
 point.write('Puntaje:0', align='center', font=('Arial', 25, 'normal'))      #Funcion para visualizar el texto en la pantalla
+point = 0                                                                   #El mensaje del puntaje de la partida actuale iniciará en 0
 
 #Configuracion del cuerpo de la serpiente
 body = []
@@ -131,4 +131,3 @@ window.onkeypress(derecha,'Right')                  #Funcion que ejecuta la rese
 while True:                                         #Funcion para crear un bucle infinito en este caso utilizada para que la pantalla se mantenga activa
     window.update()                                 #Funcion para que ejute constantemente la actualizacion de la pantalla, es decir que no la cierre
     time.sleep(hold)                                #Funcion para que aplique el retraso del tiempo establecido inicialmente
-    
