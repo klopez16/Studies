@@ -4,20 +4,15 @@ import turtle                                       #Libreria para construir la 
 import random                                       #Libreria para traer numeros aleatorios (en este caso lo utilizo para generar aleatoriamente las coordenadas del alimento)
 import time                                         #Libreria para acceder a funciones relacionadas con el tiempo
 
-#Configuracion pantalla
+#Configuracion retraso de la pantalla
 hold = 0.1                                          #Variable asignada para determinar un tiempo, en este caso un retraso 
 
 # Configuración de la pantalla
 window = turtle.Screen()                            #Pantalla a generarse
-turtle.window_width()                               #Dimensiones de la pantalla (ancho)
-200                                                 
-turtle.window_height()                              #Dimensiones de la pantalla (alto)
-200                                                 
-turtle.delay()                                      #Establecer un retraso entre actualizaciones del lienzo
-500
+window.setup(width=600, height=700)                 #Dimensiones de la pantalla
 window.tracer(0)                                    #Establecer un mejor visual para la animacion
 window.title('Snake Game')                          #Título del juego que se visualiza en la pantalla  
-window.bgcolor('white')
+window.bgcolor('black')
 
 #Configuracion de la serpiente (cabeza)
 head = turtle.Turtle()                              #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso la cabeza)
@@ -26,7 +21,7 @@ head.shape('circle')                                #Establecer una forma geomet
 head.color('navy')                                  #Establecer un color para la cabeza de la serpiente
 head.penup()                                        #Funcion para borrar el rastro de la cabeza en la pantalla
 head.goto(0,0)                                      #Funcion aplicada para que la cabeza aparezce una parte aleatoria de la pantalla
-head.direction = 'stop'                             #Variable para solicitar que la cabeza no se mueva automaticamente al iniciar la partida
+head.direction = 'Stop'                             #Variable para solicitar que la cabeza no se mueva automaticamente al iniciar la partida
 
 #Configuracion del alimento
 food = turtle.Turtle()                              #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el alimento)
@@ -34,7 +29,7 @@ food.speed(0)                                       #Establecer la velocidad de 
 food.shape('triangle')                              #Establecer una forma geometrica para el alimento de la serpiente
 food.color('green')                                 #Establecer un color para el alimento de la serpiente
 food.penup()                                        #Funcion para borrar el rastro de el alimento en la pantalla
-food.goto(0,100)                                      #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla
+food.goto(0,100)                                    #Funcion aplicada para que el alimento aparezce una parte aleatoria de la pantalla
 
 bodies = []
 
@@ -74,46 +69,70 @@ def direction():                                    #Funcion para reservar un bl
         head.setx(x + 20)                           #Funcion para actualizar (mover) la posicion de cabeza de la serpiente en la coordenada X
 
 #Configuracion para conexion de la pantalla con el teclado
-    window.listen()                                     #Funcion donde la pantalla está esperando la accion
-    window.onkeypress(arriba,'Up')                      #Funcion que ejecuta la reserva del bloque definido, en este caso hacia arriba
-    window.onkeypress(abajo,'Down')                     #Funcion que ejecuta la reserva del bloque definido, en este caso hacia abajo
-    window.onkeypress(izquierda,'Left')                 #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la izquierda
-    window.onkeypress(derecha,'Right')                  #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la derecha
+window.listen()                                 #Funcion donde la pantalla está esperando la accion
+window.onkeypress(arriba, 'Up')                 #Funcion que ejecuta la reserva del bloque definido, en este caso hacia arriba
+window.onkeypress(abajo, 'Down')                #Funcion que ejecuta la reserva del bloque definido, en este caso hacia abajo
+window.onkeypress(izquierda, 'Left')            #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la izquierda
+window.onkeypress(derecha, 'Right')             #Funcion que ejecuta la reserva del bloque definido, en este caso hacia la derecha
 
 #Configuracion del movimiento del Juego
 while True:                                         #Funcion para crear un bucle infinito
-
     window.update()                                 #Funcion para que ejute constantemente la actualizacion de la pantalla, es decir que no la cierre
 
+#Configuracion de choque contra los bordes
+    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
+        time.sleep(1)
+        head.goto(0, 0)
+        head.direction = "Right"
+
+#Configuracion para ocultar los puntos que forman el cuerpo de la serpiente
+        for body in bodies:
+            body.goto(1000, 1000)
+
+#Configuracion para limpiar la lista de la variable new_body o es decir del cuerpo de la serpiente
+        bodies.clear()
+
 #Configuracion de Alimentacion (choque de la cabeza con la comida)
-    def feeding():                                      #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
-        if head.distance(food)<20:                      #Funcion IF para determinar la distancia entre la cabeza y la comida
-            x = random.randint(-270, 270)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada X
-            y = random.randint(-270, 270)               #Funcion para generar un numero aleatorio en el rango establecido para la coordenada Y
-            food.goto(x,y)                              #Actualizacion del alimento de manera random
+    if head.distance(food)<20:                  #Funcion IF para determinar la distancia entre la cabeza y la comida
+        x = random.randint(-270, 270)           #Funcion para generar un numero aleatorio en el rango establecido para la coordenada X
+        y = random.randint(-270, 270)           #Funcion para generar un numero aleatorio en el rango establecido para la coordenada Y
+        food.goto(x,y)                          #Actualizacion del alimento de manera random
 
 #Configuracion para crecimiento del cuerpo de la serpiente
-            new_body = turtle.Turtle()                  #
-            new_body.speed(0)                           #
-            new_body.shape('square')                    #
-            new_body.color('white')                     #
-            new_body.penup()                            #
-            bodies.append(new_body)                     #
+        new_body = turtle.Turtle()              #Asignar una variable de un objeto creado en turtle en la pantalla (en este caso el cuerpo de la serpiente)
+        new_body.speed(0)                       #Establecer la velocidad de la animacion en turtle
+        new_body.shape('square')                #Establecer una forma geometrica para el cuerpo de la serpiente
+        new_body.color('white')                 #Establecer un color para el cuerpo de la serpiente
+        new_body.penup()                        #Funcion para borrar el rastro de el alimento en la pantalla
+        bodies.append(new_body)                 #Funcion para agregar los nuevos objetos al final (en este caso ir adjuntando el cuerpo de la serpiente)
 
-#Configuracion para movimiento del cuerpo
-    def movementBody():                                 #Funcion para reservar un bloque de codigo definiendo el nombre asignado al bloque
-        totalBody = len(body)                           #Funcion para devolver la longitud del objeto en este caso el cuerpo
-    
-        for body in range(totalBody-1,0,-1):            #Funcion en bucle para iterar 
-        x = body[body-1].xcor()                         #Método para obtener la coordenada X del objeto
-        y = body[body-1].ycor()                         #Método para obtener la coordenada Y del objeto
-        body[body].goto(x,y)                            #Método para mover el objeto a las coordenadas X,Y obtenidas en las dos líneas anteriores
+#Configuracion para mover el cuerpo de la serpiente
+    for index in range(len(bodies) - 1, 0, -1):
+        x = bodies[index - 1].xcor()
+        y = bodies[index - 1].ycor()
+        bodies[index].goto(x, y)
 
-        if totalBody >0:                                #Funcion IF para determinar hacia donde se presenta la direccion
-        x = head.xcor()                                 #Definimos a X como la variable que determina el movimiento horizontal de la serpiente
-        y = head.ycor()                                 #Definimos a Y como la variable que determina el movimiento vertical de la serpiente
-        body[0].goto(x,y)                               #Método para mover el objeto a las coordenadas X,Y
+#Configuracion para mover la cabeza de la serpiente
+    if len(bodies) > 0:
+        x = head.xcor()
+        y = head.ycor()
+        bodies[0].goto(x, y)
 
+    direction()
+
+#configuracion para el choque de la cabeza con el cuerpo de la serpiente
+    for body in bodies:
+        if head.distance(body) < 20:
+            time.sleep(1)
+            head.goto(0, 0)
+            head.direction = 'Right'
+
+
+            for bod in bodies:
+                bod.goto(1000, 1000)
+
+
+                bodies.clear()
 
     
     time.sleep(hold)                                #Funcion para que aplique el retraso del tiempo establecido inicialmente
