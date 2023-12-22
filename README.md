@@ -1,6 +1,6 @@
 Juego de la serpiente
 
-  Información general
+  	Información general
 Nombre: 			Juego de la serpiente (Snake Game)
 Autor: 				Kevin López
 Versión: 			1.0
